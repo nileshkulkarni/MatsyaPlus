@@ -1,0 +1,614 @@
+Grammar
+
+    0 $accept: data $end
+
+    1 data: cards
+
+    2 cards: crc
+    3      | cards crc
+    4      | error
+
+    5 crc: CRC class responsibilities colabrations END
+
+    6 class: CLASS className
+    7      | CLASS error
+
+    8 className: CLASSNAME
+
+    9 responsibilities: responsibility
+   10                 | responsibilities responsibility
+   11                 | error
+
+   12 responsibility: RESPONSIBILITY methodName attributes END
+   13               | RESPONSIBILITY error attributes END
+
+   14 methodName: METHODNAME
+
+   15 attributes: /* empty */
+   16           | attributes attribute
+
+   17 attribute: INT VARIABLE
+   18          | CHAR VARIABLE
+   19          | INT PTR VARIABLE
+   20          | CHAR PTR VARIABLE
+   21          | error STRING
+   22          | error PTR STRING
+   23          | INT error
+   24          | CHAR error
+   25          | INT PTR error
+   26          | CHAR PTR error
+
+   27 colabrations: /* empty */
+   28             | colabrations colabration
+
+   29 colabration: COLABRATION colabrationType END
+   30            | COLABRATION error END
+
+   31 colabrationType: USING class
+   32                | HAS_A class
+   33                | KIND_OF class
+   34                | error class
+   35                | USING error
+   36                | HAS_A error
+   37                | KIND_OF error
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256) 4 7 11 13 21 22 23 24 25 26 30 34 35 36 37
+CLASS (258) 6 7
+CRC (259) 5
+END (260) 5 12 13 29 30
+CLASSNAME (261) 8
+RESPONSIBILITY (262) 12 13
+COLABRATION (263) 29 30
+STRING (264) 21 22
+INT (265) 17 19 23 25
+CHAR (266) 18 20 24 26
+PTR (267) 19 20 22 25 26
+VARIABLE (268) 17 18 19 20
+METHODNAME (269) 14
+USING (270) 31 35
+HAS_A (271) 32 36
+KIND_OF (272) 33 37
+
+
+Nonterminals, with rules where they appear
+
+$accept (18)
+    on left: 0
+data (19)
+    on left: 1, on right: 0
+cards (20)
+    on left: 2 3 4, on right: 1 3
+crc (21)
+    on left: 5, on right: 2 3
+class (22)
+    on left: 6 7, on right: 5 31 32 33 34
+className (23)
+    on left: 8, on right: 6
+responsibilities (24)
+    on left: 9 10 11, on right: 5 10
+responsibility (25)
+    on left: 12 13, on right: 9 10
+methodName (26)
+    on left: 14, on right: 12
+attributes (27)
+    on left: 15 16, on right: 12 13 16
+attribute (28)
+    on left: 17 18 19 20 21 22 23 24 25 26, on right: 16
+colabrations (29)
+    on left: 27 28, on right: 5 28
+colabration (30)
+    on left: 29 30, on right: 28
+colabrationType (31)
+    on left: 31 32 33 34 35 36 37, on right: 29
+
+
+state 0
+
+    0 $accept: . data $end
+
+    error  shift, and go to state 1
+    CRC    shift, and go to state 2
+
+    data   go to state 3
+    cards  go to state 4
+    crc    go to state 5
+
+
+state 1
+
+    4 cards: error .
+
+    $default  reduce using rule 4 (cards)
+
+
+state 2
+
+    5 crc: CRC . class responsibilities colabrations END
+
+    CLASS  shift, and go to state 6
+
+    class  go to state 7
+
+
+state 3
+
+    0 $accept: data . $end
+
+    $end  shift, and go to state 8
+
+
+state 4
+
+    1 data: cards .
+    3 cards: cards . crc
+
+    CRC  shift, and go to state 2
+
+    $default  reduce using rule 1 (data)
+
+    crc  go to state 9
+
+
+state 5
+
+    2 cards: crc .
+
+    $default  reduce using rule 2 (cards)
+
+
+state 6
+
+    6 class: CLASS . className
+    7      | CLASS . error
+
+    error      shift, and go to state 10
+    CLASSNAME  shift, and go to state 11
+
+    className  go to state 12
+
+
+state 7
+
+    5 crc: CRC class . responsibilities colabrations END
+
+    error           shift, and go to state 13
+    RESPONSIBILITY  shift, and go to state 14
+
+    responsibilities  go to state 15
+    responsibility    go to state 16
+
+
+state 8
+
+    0 $accept: data $end .
+
+    $default  accept
+
+
+state 9
+
+    3 cards: cards crc .
+
+    $default  reduce using rule 3 (cards)
+
+
+state 10
+
+    7 class: CLASS error .
+
+    $default  reduce using rule 7 (class)
+
+
+state 11
+
+    8 className: CLASSNAME .
+
+    $default  reduce using rule 8 (className)
+
+
+state 12
+
+    6 class: CLASS className .
+
+    $default  reduce using rule 6 (class)
+
+
+state 13
+
+   11 responsibilities: error .
+
+    $default  reduce using rule 11 (responsibilities)
+
+
+state 14
+
+   12 responsibility: RESPONSIBILITY . methodName attributes END
+   13               | RESPONSIBILITY . error attributes END
+
+    error       shift, and go to state 17
+    METHODNAME  shift, and go to state 18
+
+    methodName  go to state 19
+
+
+state 15
+
+    5 crc: CRC class responsibilities . colabrations END
+   10 responsibilities: responsibilities . responsibility
+
+    RESPONSIBILITY  shift, and go to state 14
+
+    $default  reduce using rule 27 (colabrations)
+
+    responsibility  go to state 20
+    colabrations    go to state 21
+
+
+state 16
+
+    9 responsibilities: responsibility .
+
+    $default  reduce using rule 9 (responsibilities)
+
+
+state 17
+
+   13 responsibility: RESPONSIBILITY error . attributes END
+
+    $default  reduce using rule 15 (attributes)
+
+    attributes  go to state 22
+
+
+state 18
+
+   14 methodName: METHODNAME .
+
+    $default  reduce using rule 14 (methodName)
+
+
+state 19
+
+   12 responsibility: RESPONSIBILITY methodName . attributes END
+
+    $default  reduce using rule 15 (attributes)
+
+    attributes  go to state 23
+
+
+state 20
+
+   10 responsibilities: responsibilities responsibility .
+
+    $default  reduce using rule 10 (responsibilities)
+
+
+state 21
+
+    5 crc: CRC class responsibilities colabrations . END
+   28 colabrations: colabrations . colabration
+
+    END          shift, and go to state 24
+    COLABRATION  shift, and go to state 25
+
+    colabration  go to state 26
+
+
+state 22
+
+   13 responsibility: RESPONSIBILITY error attributes . END
+   16 attributes: attributes . attribute
+
+    error  shift, and go to state 27
+    END    shift, and go to state 28
+    INT    shift, and go to state 29
+    CHAR   shift, and go to state 30
+
+    attribute  go to state 31
+
+
+state 23
+
+   12 responsibility: RESPONSIBILITY methodName attributes . END
+   16 attributes: attributes . attribute
+
+    error  shift, and go to state 27
+    END    shift, and go to state 32
+    INT    shift, and go to state 29
+    CHAR   shift, and go to state 30
+
+    attribute  go to state 31
+
+
+state 24
+
+    5 crc: CRC class responsibilities colabrations END .
+
+    $default  reduce using rule 5 (crc)
+
+
+state 25
+
+   29 colabration: COLABRATION . colabrationType END
+   30            | COLABRATION . error END
+
+    error    shift, and go to state 33
+    USING    shift, and go to state 34
+    HAS_A    shift, and go to state 35
+    KIND_OF  shift, and go to state 36
+
+    colabrationType  go to state 37
+
+
+state 26
+
+   28 colabrations: colabrations colabration .
+
+    $default  reduce using rule 28 (colabrations)
+
+
+state 27
+
+   21 attribute: error . STRING
+   22          | error . PTR STRING
+
+    STRING  shift, and go to state 38
+    PTR     shift, and go to state 39
+
+
+state 28
+
+   13 responsibility: RESPONSIBILITY error attributes END .
+
+    $default  reduce using rule 13 (responsibility)
+
+
+state 29
+
+   17 attribute: INT . VARIABLE
+   19          | INT . PTR VARIABLE
+   23          | INT . error
+   25          | INT . PTR error
+
+    error     shift, and go to state 40
+    PTR       shift, and go to state 41
+    VARIABLE  shift, and go to state 42
+
+
+state 30
+
+   18 attribute: CHAR . VARIABLE
+   20          | CHAR . PTR VARIABLE
+   24          | CHAR . error
+   26          | CHAR . PTR error
+
+    error     shift, and go to state 43
+    PTR       shift, and go to state 44
+    VARIABLE  shift, and go to state 45
+
+
+state 31
+
+   16 attributes: attributes attribute .
+
+    $default  reduce using rule 16 (attributes)
+
+
+state 32
+
+   12 responsibility: RESPONSIBILITY methodName attributes END .
+
+    $default  reduce using rule 12 (responsibility)
+
+
+state 33
+
+   30 colabration: COLABRATION error . END
+   34 colabrationType: error . class
+
+    CLASS  shift, and go to state 6
+    END    shift, and go to state 46
+
+    class  go to state 47
+
+
+state 34
+
+   31 colabrationType: USING . class
+   35                | USING . error
+
+    error  shift, and go to state 48
+    CLASS  shift, and go to state 6
+
+    class  go to state 49
+
+
+state 35
+
+   32 colabrationType: HAS_A . class
+   36                | HAS_A . error
+
+    error  shift, and go to state 50
+    CLASS  shift, and go to state 6
+
+    class  go to state 51
+
+
+state 36
+
+   33 colabrationType: KIND_OF . class
+   37                | KIND_OF . error
+
+    error  shift, and go to state 52
+    CLASS  shift, and go to state 6
+
+    class  go to state 53
+
+
+state 37
+
+   29 colabration: COLABRATION colabrationType . END
+
+    END  shift, and go to state 54
+
+
+state 38
+
+   21 attribute: error STRING .
+
+    $default  reduce using rule 21 (attribute)
+
+
+state 39
+
+   22 attribute: error PTR . STRING
+
+    STRING  shift, and go to state 55
+
+
+state 40
+
+   23 attribute: INT error .
+
+    $default  reduce using rule 23 (attribute)
+
+
+state 41
+
+   19 attribute: INT PTR . VARIABLE
+   25          | INT PTR . error
+
+    error     shift, and go to state 56
+    VARIABLE  shift, and go to state 57
+
+
+state 42
+
+   17 attribute: INT VARIABLE .
+
+    $default  reduce using rule 17 (attribute)
+
+
+state 43
+
+   24 attribute: CHAR error .
+
+    $default  reduce using rule 24 (attribute)
+
+
+state 44
+
+   20 attribute: CHAR PTR . VARIABLE
+   26          | CHAR PTR . error
+
+    error     shift, and go to state 58
+    VARIABLE  shift, and go to state 59
+
+
+state 45
+
+   18 attribute: CHAR VARIABLE .
+
+    $default  reduce using rule 18 (attribute)
+
+
+state 46
+
+   30 colabration: COLABRATION error END .
+
+    $default  reduce using rule 30 (colabration)
+
+
+state 47
+
+   34 colabrationType: error class .
+
+    $default  reduce using rule 34 (colabrationType)
+
+
+state 48
+
+   35 colabrationType: USING error .
+
+    $default  reduce using rule 35 (colabrationType)
+
+
+state 49
+
+   31 colabrationType: USING class .
+
+    $default  reduce using rule 31 (colabrationType)
+
+
+state 50
+
+   36 colabrationType: HAS_A error .
+
+    $default  reduce using rule 36 (colabrationType)
+
+
+state 51
+
+   32 colabrationType: HAS_A class .
+
+    $default  reduce using rule 32 (colabrationType)
+
+
+state 52
+
+   37 colabrationType: KIND_OF error .
+
+    $default  reduce using rule 37 (colabrationType)
+
+
+state 53
+
+   33 colabrationType: KIND_OF class .
+
+    $default  reduce using rule 33 (colabrationType)
+
+
+state 54
+
+   29 colabration: COLABRATION colabrationType END .
+
+    $default  reduce using rule 29 (colabration)
+
+
+state 55
+
+   22 attribute: error PTR STRING .
+
+    $default  reduce using rule 22 (attribute)
+
+
+state 56
+
+   25 attribute: INT PTR error .
+
+    $default  reduce using rule 25 (attribute)
+
+
+state 57
+
+   19 attribute: INT PTR VARIABLE .
+
+    $default  reduce using rule 19 (attribute)
+
+
+state 58
+
+   26 attribute: CHAR PTR error .
+
+    $default  reduce using rule 26 (attribute)
+
+
+state 59
+
+   20 attribute: CHAR PTR VARIABLE .
+
+    $default  reduce using rule 20 (attribute)

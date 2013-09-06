@@ -61,7 +61,7 @@ body_lines:
 								| body_line
 								;
 body_line:
-								INT INT INT INT STRING ENDLS { cout << "new snazzle: " << $1 << $2 << $3 << $4 << $5 << endl; }
+								INT INT INT INT STRING ENDLS { cout << "new snazzle: " << $1 + $2 << $3 << $4 << $5 << endl; }
 								;
 footer:
 								END ENDL
@@ -92,5 +92,5 @@ main() {
 void yyerror(const char *s) {
 								cout << "EEK, parse error!  Message: " << s<< " at line "<<line_no << endl;
 								// might as well halt now:
-								exit(-1);
+								//exit(-1);
 }

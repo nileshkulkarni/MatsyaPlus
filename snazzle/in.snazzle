@@ -5,7 +5,9 @@ type bar
 type bas
 
 
-0 0 10 5 foo
+100 200 10 5 foo
+
+0 0 10 5 b
 20 10 30 20 foo
 
 

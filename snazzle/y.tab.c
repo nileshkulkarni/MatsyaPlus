@@ -28,8 +28,9 @@ extern "C" int yylex();
 extern "C" int yyparse();
 extern "C" FILE *yyin;
 extern int line_no; 
+void testFun(int a);
 void yyerror(const char *s);
-#line 21 "snazzle.y"
+#line 22 "snazzle.y"
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
@@ -42,7 +43,7 @@ typedef union {
 								char *sval;
 } YYSTYPE;
 #endif /* !YYSTYPE_IS_DECLARED */
-#line 45 "y.tab.c"
+#line 46 "y.tab.c"
 
 /* compatibility with bison */
 #ifdef YYPARSE_PARAM
@@ -188,7 +189,7 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 73 "snazzle.y"
+#line 77 "snazzle.y"
 
 main() {
 								// open a file handle to a particular file:
@@ -208,12 +209,15 @@ main() {
 								
 }
 
+void testFun(int a){
+			cout<<" Some shit " <<a<<endl;
+}
 void yyerror(const char *s) {
 								cout << "EEK, parse error!  Message: " << s<< " at line "<<line_no << endl;
 								// might as well halt now:
 								//exit(-1);
 }
-#line 216 "y.tab.c"
+#line 220 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -420,22 +424,22 @@ yyreduce:
     switch (yyn)
     {
 case 1:
-#line 41 "snazzle.y"
+#line 45 "snazzle.y"
 	{ cout << "done with a snazzle file!" << endl; }
 break;
 case 2:
-#line 44 "snazzle.y"
+#line 48 "snazzle.y"
 	{ cout << "reading a snazzle file version " << yystack.l_mark[-1].fval << endl; }
 break;
 case 6:
-#line 54 "snazzle.y"
+#line 58 "snazzle.y"
 	{ cout << "new defined snazzle type: " << yystack.l_mark[-1].sval << endl; }
 break;
 case 10:
-#line 64 "snazzle.y"
-	{ cout << "new snazzle: " << yystack.l_mark[-5].ival + yystack.l_mark[-4].ival << yystack.l_mark[-3].ival << yystack.l_mark[-2].ival << yystack.l_mark[-1].sval << endl; }
+#line 68 "snazzle.y"
+	{ cout << "new snazzle: " << yystack.l_mark[-5].ival + yystack.l_mark[-4].ival << yystack.l_mark[-3].ival << yystack.l_mark[-2].ival << yystack.l_mark[-1].sval << endl; testFun(yystack.l_mark[-5].ival); }
 break;
-#line 438 "y.tab.c"
+#line 442 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;

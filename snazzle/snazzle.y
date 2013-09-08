@@ -10,6 +10,7 @@ extern "C" int yylex();
 extern "C" int yyparse();
 extern "C" FILE *yyin;
 extern int line_no; 
+void testFun(int a);
 void yyerror(const char *s);
 %}
 
@@ -23,6 +24,9 @@ void yyerror(const char *s);
 								float fval;
 								char *sval;
 }
+
+
+
 
 // define the constant-string tokens:
 %token SNAZZLE TYPE
@@ -61,7 +65,7 @@ body_lines:
 								| body_line
 								;
 body_line:
-								INT INT INT INT STRING ENDLS { cout << "new snazzle: " << $1 + $2 << $3 << $4 << $5 << endl; }
+								INT INT INT INT STRING ENDLS { cout << "new snazzle: " << $1 + $2 << $3 << $4 << $5 << endl; testFun($1); }
 								;
 footer:
 								END ENDL
@@ -89,6 +93,9 @@ main() {
 								
 }
 
+void testFun(int a){
+			cout<<" Some shit " <<a<<endl;
+}
 void yyerror(const char *s) {
 								cout << "EEK, parse error!  Message: " << s<< " at line "<<line_no << endl;
 								// might as well halt now:

@@ -30,3 +30,15 @@ void  text(char * a ){
 							printf("Printing %si",a);	
 								
 }
+
+void ifsmt(int cond, int a ,int b){
+
+	
+
+}
+
+void ifOnlysmt(int cond, int a ,int b){
+
+	
+
+}

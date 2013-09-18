@@ -54,18 +54,25 @@ void yyerror(const char *s);
 %token <fval> FLOAT
 %token <svalVar> VARIABLE
 %token <svalText> TEXT
+
+%type <ival> expression expr2 expr3 expr4   
+%type <svalVar> assignment
+%type <svalText> text
+
 %%
 
 ROOT: 
 				stmtseq{execute($1);}
 ;
-statement:
-									designator ASSIGN expression { $$ = assignment($1,$3); }
+statement: assignment
 | PRINT expression{ $$ print($2);}
 | IF expression THEN stmtseq ELSE stmtseq FI {$$= ifstmt($2,$4,$6);}
 | IF expression THEN stmtseq  FI {$$= ifOnlystmt($2,$4);}
-|WHILE expression DO stmtseq OD {$$= whilestmt($2,$4);}
+| WHILE expression DO stmtseq OD {$$= whilestmt($2,$4);}
 ;
+
+assignement:designator ASSIGN expression { $$ = assignment($1,$3); }
+
 
 stmtseq:
 							stmtseq SEMICOLON statement {$$ = seq($1,$3);}

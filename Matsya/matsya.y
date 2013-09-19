@@ -4,11 +4,16 @@
 
 #include "y.tab.h"
 #include "functions.h"
+#include "header.h"
+
 extern "C" int yylex();
 extern "C" int yyparse();
 extern "C" FILE *yyin;
 
 void yyerror(const char *s);
+
+
+tree_t * _C_treeRoot;
 
 %}
 
@@ -37,10 +42,6 @@ void yyerror(const char *s);
 %token DO
 %token OD
 %token PRINT
-//%token INT
-//%token FLOAT
-//%token VARIABLE
-//%token TEXT
 
 %union{
 	int ival;
@@ -58,6 +59,10 @@ void yyerror(const char *s);
 %type <ival> expression expr2 expr3 expr4   
 %type <svalVar> assignment
 %type <svalText> text
+
+
+
+
 
 %%
 

@@ -8,14 +8,20 @@
 using namespace std;
 
 extern tree_t* _treeRoot;
+void insertTabs(int n){
+								for(int i=0;i<n;i++)
+																cout<<"\t";
+}
 
-void printNodeData(tree_t* node){
-						cout<<"Type ="<<node->type<<"\n";
-						cout<<"No of links="<<node->nb_links<<"\n";
+void printNodeData(tree_t* node,int tablevel){
+						insertTabs(tablevel);
+					 cout<<"Type ="<<node->type<<"\n";
+						insertTabs(tablevel);
+						cout<<"\tNo of links="<<node->nb_links<<"\n\n";
 						int nb_links = node->nb_links;
 					
 						for(int i =0;i<nb_links;i++){
-										printNodeData(node->links[i]);
+										printNodeData(node->links[i],tablevel+1);
 						}
 						
 
@@ -23,7 +29,7 @@ void printNodeData(tree_t* node){
 }
 
 void printStmt(tree_t* stmt){	
-					printNodeData(stmt);
+					printNodeData(stmt,0);
 }
 
 tree_t* createTree(tree_t* root){
@@ -37,8 +43,8 @@ void recurseParseTree(tree_t* stmtseq){
 															return;
 							}
 							if(stmtseq->type =="STMTSEQ"){
-														printStmt(stmtseq->links[1]);
 														recurseParseTree(stmtseq->links[0]); 	
+														printStmt(stmtseq->links[1]);
 							}
 							else{
 															std::cout<<"Error in parse tree";

@@ -1,14 +1,41 @@
 #include <stdio.h>
 #include <string.h>
+#include <iostream>
 #include "function.h"
 #include "header.h"
 #include "y.tab.h"
 
+using namespace std;
+
 extern tree_t* _treeRoot;
+
+void printStmt(tree_t* stmt){	
+								cout<<"Type = "<< stmt->type<<endl;
+}
 
 tree_t* createTree(tree_t* root){
 								_treeRoot=root;
 								return _treeRoot;
+}
+
+void recurseParseTree(tree_t* stmtseq){
+							if(stmtseq == NULL){
+															std::cout<<"Finished Parsing\n";
+															return;
+							}
+							if(stmtseq->type =="STMTSEQ"){
+														printStmt(stmtseq->links[1]);
+														recurseParseTree(stmtseq->links[0]); 	
+							}
+							else{
+															std::cout<<"Error in parse tree";
+															return;
+							}
+}
+
+
+void printParseTree(){
+								recurseParseTree(_treeRoot);
 }
 
 
@@ -75,6 +102,20 @@ tree_t* assignment(tree_t* variable, tree_t* expr){
 								t->links[1] = expr;
 								return t;
 }
+
+tree_t* singleStmt(tree_t* stmt){
+								tree_t* t = new tree_t;
+
+								t->type ="STMTSEQ";
+								t->nb_links=2;
+								t->links = new tree_t*[2];
+								t->links[0] = NULL ;
+								t->links[1] = stmt;
+								return t;
+
+
+}
+
 
 tree_t* seq( tree_t* stmtseq, tree_t* stmt){
 								tree_t* t = new tree_t;

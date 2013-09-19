@@ -1,6 +1,5 @@
-#line 2 "lex.yy.c"
 
-#line 4 "lex.yy.c"
+#line 3 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -496,8 +495,8 @@ char *yytext;
 #line 2 "matsya.lex"
 #include "y.tab.h"
 //extern char* yytext[];
-extern YYSTYPE yyval;
-#line 501 "lex.yy.c"
+//extern YYSTYPE yyval;
+#line 500 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -686,7 +685,7 @@ YY_DECL
     
 #line 6 "matsya.lex"
 
-#line 690 "lex.yy.c"
+#line 689 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -887,30 +886,33 @@ YY_RULE_SETUP
 case 24:
 YY_RULE_SETUP
 #line 30 "matsya.lex"
-{return yyval.ival =atoi(yytext);return INT;}
+{//return yyval.ival =atoi(yytext);
+										return INT;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 31 "matsya.lex"
-{return yyval.fval =atof(yytext);return FLOAT;}
+#line 32 "matsya.lex"
+{//return yyval.fval =atof(yytext);
+										return FLOAT;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 32 "matsya.lex"
-{	yyval.svalVar = strdup(yytext);return VARIABLE;}
+#line 34 "matsya.lex"
+{//yyval.svalVar = strdup(yytext);
+										return VARIABLE;}
 	YY_BREAK
 case 27:
 /* rule 27 can match eol */
 YY_RULE_SETUP
-#line 33 "matsya.lex"
+#line 36 "matsya.lex"
 {return ENDL;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 34 "matsya.lex"
+#line 37 "matsya.lex"
 ECHO;
 	YY_BREAK
-#line 914 "lex.yy.c"
+#line 916 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1908,7 +1910,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 34 "matsya.lex"
+#line 37 "matsya.lex"
 
 
 #ifndef yywarp

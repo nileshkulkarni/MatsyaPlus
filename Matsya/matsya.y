@@ -1,5 +1,7 @@
 %{
 #include <stdio.h>
+#include <iostream>
+using namespace std;
 #include "y.tab.h"
 #include "function.h"
 #include "header.h"
@@ -72,7 +74,7 @@ assignment:designator ASSIGN expression { $$ = assignment($1,$3); }
 ;
 
 stmtseq: stmtseq SEMICOLON statement {$$ = seq($1,$3);}
-| statement{$$=$1;}
+| statement{$$=singleStmt($1);}
 ;
 
 expression: expr2{$$=$1;}
@@ -96,7 +98,7 @@ expr4:
 					PLUS expr4 {$$ = $2;}
 | MINUS expr4 {$$ = $2;}
 |	LPAREN expression RPAREN {$$ = $2;}
-|	INT { $$ = integer($1);}
+|	INT { std::cout <<" Here\n"; $$ = integer($1);}
 |	designator {$$ =$1;}
 ;
 
@@ -108,19 +110,20 @@ designator:
 %%
 
 int main(){
-	//FILE *myfile = fopen("in.matsya","r");
-	//if(!myfile){
-			//		printf(" I cant open in.matsya\n");
-//	}
-	//yyin = myfile;
+	FILE *myfile = fopen("in.matsya","r");
+	if(!myfile){
+				std::cout<<" I cant open in.matsya\n"<<std::endl;
+	}
+	yyin = myfile;
 	do{
-//			yyparse();
+			yyparse();
 	}while(!feof(yyin));
-
+	printParseTree();
 
 }
 
 void yyerror(const char* s){
-	return;
+		std::cout<<"parsing error"<<std::endl;
+		return;
 }
 

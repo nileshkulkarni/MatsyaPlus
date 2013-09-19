@@ -10,6 +10,8 @@ tree_t * ifOnlystmt(tree_t* cond,tree_t* expr1);
 tree_t * whilestmt(tree_t* cond  ,tree_t* expr );
 tree_t* assignment(tree_t* variable, tree_t* expr);
 tree_t* seq( tree_t* stmtseq, tree_t* stmt);
+tree_t* singleStmt(tree_t* stmt);
+void  printParseTree();
 
 tree_t* operators(char *op, tree_t* lOperand, tree_t* rOperand);
 tree_t* variable(char* symbol);

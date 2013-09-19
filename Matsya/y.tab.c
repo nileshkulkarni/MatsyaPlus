@@ -18,6 +18,8 @@ static const char yysccsid[] = "@(#)yaccpar	1.9 (Berkeley) 02/21/93";
 
 #line 2 "matsya.y"
 #include <stdio.h>
+#include <iostream>
+using namespace std;
 #include "y.tab.h"
 #include "function.h"
 #include "header.h"
@@ -30,7 +32,7 @@ extern "C" FILE *yyin;
 void yyerror(const char *s);
 
 tree_t * _treeRoot;
-#line 46 "matsya.y"
+#line 48 "matsya.y"
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
@@ -44,7 +46,7 @@ typedef union{
 	struct tree_t* node;
 } YYSTYPE;
 #endif /* !YYSTYPE_IS_DECLARED */
-#line 47 "y.tab.c"
+#line 49 "y.tab.c"
 
 /* compatibility with bison */
 #ifdef YYPARSE_PARAM
@@ -266,26 +268,27 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 109 "matsya.y"
+#line 111 "matsya.y"
 
 int main(){
-	//FILE *myfile = fopen("in.matsya","r");
-	//if(!myfile){
-			//		printf(" I cant open in.matsya\n");
-//	}
-	//yyin = myfile;
+	FILE *myfile = fopen("in.matsya","r");
+	if(!myfile){
+				std::cout<<" I cant open in.matsya\n"<<std::endl;
+	}
+	yyin = myfile;
 	do{
-//			yyparse();
+			yyparse();
 	}while(!feof(yyin));
-
+	printParseTree();
 
 }
 
 void yyerror(const char* s){
-	return;
+		std::cout<<"parsing error"<<std::endl;
+		return;
 }
 
-#line 288 "y.tab.c"
+#line 291 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -492,118 +495,118 @@ yyreduce:
     switch (yyn)
     {
 case 1:
-#line 61 "matsya.y"
+#line 63 "matsya.y"
 	{yyval.node=createTree(yystack.l_mark[-1].node);}
 break;
 case 2:
-#line 64 "matsya.y"
+#line 66 "matsya.y"
 	{ yyval.node=yystack.l_mark[0].node;}
 break;
 case 3:
-#line 65 "matsya.y"
+#line 67 "matsya.y"
 	{ yyval.node= print(yystack.l_mark[0].node);}
 break;
 case 4:
-#line 66 "matsya.y"
+#line 68 "matsya.y"
 	{yyval.node= ifstmt(yystack.l_mark[-5].node,yystack.l_mark[-3].node,yystack.l_mark[-1].node);}
 break;
 case 5:
-#line 67 "matsya.y"
+#line 69 "matsya.y"
 	{yyval.node= ifOnlystmt(yystack.l_mark[-3].node,yystack.l_mark[-1].node);}
 break;
 case 6:
-#line 68 "matsya.y"
+#line 70 "matsya.y"
 	{yyval.node= whilestmt(yystack.l_mark[-3].node,yystack.l_mark[-1].node);}
 break;
 case 7:
-#line 71 "matsya.y"
+#line 73 "matsya.y"
 	{ yyval.node = assignment(yystack.l_mark[-2].node,yystack.l_mark[0].node); }
 break;
 case 8:
-#line 74 "matsya.y"
+#line 76 "matsya.y"
 	{yyval.node = seq(yystack.l_mark[-2].node,yystack.l_mark[0].node);}
 break;
 case 9:
-#line 75 "matsya.y"
-	{yyval.node=yystack.l_mark[0].node;}
+#line 77 "matsya.y"
+	{yyval.node=singleStmt(yystack.l_mark[0].node);}
 break;
 case 10:
-#line 78 "matsya.y"
+#line 80 "matsya.y"
 	{yyval.node=yystack.l_mark[0].node;}
 break;
 case 11:
-#line 79 "matsya.y"
+#line 81 "matsya.y"
 	{ yyval.node= operators("=",yystack.l_mark[-2].node,yystack.l_mark[0].node);}
 break;
 case 12:
-#line 80 "matsya.y"
+#line 82 "matsya.y"
 	{ yyval.node=  operators("!=",yystack.l_mark[-2].node,yystack.l_mark[0].node);}
 break;
 case 13:
-#line 81 "matsya.y"
+#line 83 "matsya.y"
 	{ yyval.node= operators("<",yystack.l_mark[-2].node,yystack.l_mark[0].node);}
 break;
 case 14:
-#line 82 "matsya.y"
+#line 84 "matsya.y"
 	{ yyval.node= operators("<=",yystack.l_mark[-2].node,yystack.l_mark[0].node);}
 break;
 case 15:
-#line 83 "matsya.y"
+#line 85 "matsya.y"
 	{ yyval.node= operators(">",yystack.l_mark[-2].node,yystack.l_mark[0].node);}
 break;
 case 16:
-#line 84 "matsya.y"
+#line 86 "matsya.y"
 	{ yyval.node= operators(">=",yystack.l_mark[-2].node,yystack.l_mark[0].node);}
 break;
 case 17:
-#line 86 "matsya.y"
+#line 88 "matsya.y"
 	{ yyval.node == yystack.l_mark[0].node;}
 break;
 case 18:
-#line 87 "matsya.y"
+#line 89 "matsya.y"
 	{ yyval.node = operators("+",yystack.l_mark[-2].node,yystack.l_mark[0].node);}
 break;
 case 19:
-#line 88 "matsya.y"
+#line 90 "matsya.y"
 	{ yyval.node= operators("-",yystack.l_mark[-2].node,yystack.l_mark[0].node);}
 break;
 case 20:
-#line 90 "matsya.y"
+#line 92 "matsya.y"
 	{ yyval.node=yystack.l_mark[0].node;}
 break;
 case 21:
-#line 91 "matsya.y"
+#line 93 "matsya.y"
 	{yyval.node = operators("*",yystack.l_mark[-2].node,yystack.l_mark[0].node);}
 break;
 case 22:
-#line 92 "matsya.y"
+#line 94 "matsya.y"
 	{yyval.node = operators("/",yystack.l_mark[-2].node,yystack.l_mark[0].node);}
 break;
 case 23:
-#line 96 "matsya.y"
+#line 98 "matsya.y"
 	{yyval.node = yystack.l_mark[0].node;}
 break;
 case 24:
-#line 97 "matsya.y"
+#line 99 "matsya.y"
 	{yyval.node = yystack.l_mark[0].node;}
 break;
 case 25:
-#line 98 "matsya.y"
+#line 100 "matsya.y"
 	{yyval.node = yystack.l_mark[-1].node;}
 break;
 case 26:
-#line 99 "matsya.y"
-	{ yyval.node = integer(yystack.l_mark[0].ival);}
+#line 101 "matsya.y"
+	{ std::cout <<" Here\n"; yyval.node = integer(yystack.l_mark[0].ival);}
 break;
 case 27:
-#line 100 "matsya.y"
+#line 102 "matsya.y"
 	{yyval.node =yystack.l_mark[0].node;}
 break;
 case 28:
-#line 105 "matsya.y"
+#line 107 "matsya.y"
 	{ yyval.node = variable(yystack.l_mark[0].svalVar); }
 break;
-#line 606 "y.tab.c"
+#line 609 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;

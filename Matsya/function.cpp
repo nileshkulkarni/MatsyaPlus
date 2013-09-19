@@ -9,8 +9,21 @@ using namespace std;
 
 extern tree_t* _treeRoot;
 
+void printNodeData(tree_t* node){
+						cout<<"Type ="<<node->type<<"\n";
+						cout<<"No of links="<<node->nb_links<<"\n";
+						int nb_links = node->nb_links;
+					
+						for(int i =0;i<nb_links;i++){
+										printNodeData(node->links[i]);
+						}
+						
+
+
+}
+
 void printStmt(tree_t* stmt){	
-								cout<<"Type = "<< stmt->type<<endl;
+					printNodeData(stmt);
 }
 
 tree_t* createTree(tree_t* root){
@@ -48,8 +61,7 @@ tree_t * print(tree_t* expr){
 								t->links = new tree_t*[1];
 								t->links[0] = expr;
 								t->type = "PRINT"; 
-								std:: cout<<" tree for print created\n";
-								std:: cout<<expr->type<<endl;
+
 								
 								return t;
 
@@ -114,7 +126,6 @@ tree_t* singleStmt(tree_t* stmt){
 								t->links = new tree_t*[2];
 								t->links[0] = NULL ;
 								t->links[1] = stmt;
-								std::cout<<" Statement type in "<<stmt->type<<std::endl;
 								return t;
 
 
@@ -147,8 +158,10 @@ tree_t* operators(char *op, tree_t* lOperand, tree_t* rOperand){
 }
 
 tree_t* variable(char* symbol){
+								//std::cout<<symbol<<"\n";
 								tree_t* t= new tree_t;
 								t->type="VARIABLE";
+								t->nb_links=0;
 								t->symbol = new char[10];
 								strcpy(t->symbol,symbol);
 								return t;
@@ -157,10 +170,10 @@ tree_t* variable(char* symbol){
 tree_t* integer(int value){
 								tree_t* t=  new tree_t;
 								t->type="INT";
+								t->nb_links=0;
 								t->value = value;
 
 								return t;
 }
-
 
 

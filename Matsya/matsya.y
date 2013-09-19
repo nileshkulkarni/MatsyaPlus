@@ -12,7 +12,7 @@ extern "C" int yyparse();
 extern "C" FILE *yyin;
 
 void yyerror(const char *s);
-
+extern char* yytext;
 tree_t * _treeRoot;
 %}
 
@@ -45,6 +45,7 @@ tree_t * _treeRoot;
 %token FLOAT
 %token VARIABLE
 %token ENDL
+
 %union{
 	int ival;
 	float fval;
@@ -60,22 +61,22 @@ tree_t * _treeRoot;
 
 %%
 
-ROOT: stmtseq SEMICOLON { std::cout<<" stmt seg here\n";$$=createTree($1);}
+ROOT: stmtseq endls  { $$=createTree($1);}
 					
 ;
 
 statement: assignment{ $$=$1;}
-| PRINT expression{ std::cout<<" Print here\n";$$= print($2);}
+| PRINT expression{ $$= print($2);}
 | IF expression THEN stmtseq ELSE stmtseq FI {$$= ifstmt($2,$4,$6);}
 | IF expression THEN stmtseq  FI {$$= ifOnlystmt($2,$4);}
 | WHILE expression DO stmtseq OD {$$= whilestmt($2,$4);}
 ;
 
-assignment:designator ASSIGN expression { $$ = assignment($1,$3); }
+assignment:designator ASSIGN expression {$$ = assignment($1,$3); }
 ;
 
-stmtseq: stmtseq SEMICOLON statement {$$ = seq($1,$3);}
-| statement{std::cout<<" signle statement level\n";$$=singleStmt($1);}
+stmtseq: stmtseq endls statement {$$ = seq($1,$3);}
+| statement{$$=singleStmt($1);}
 ;
 
 expression: expr2{$$=$1;}
@@ -99,14 +100,19 @@ expr4:
 					PLUS expr4 {$$ = $2;}
 | MINUS expr4 {$$ = $2;}
 |	LPAREN expression RPAREN {$$ = $2;}
-|	INT { std::cout <<" Here\n"; $$ = integer($1);}
+|	INT {  $$ = integer($1);}
 |	designator {$$ =$1;}
 ;
 
 
 designator:
-										VARIABLE{ $$ = variable($1); }
+										VARIABLE{$$ = variable(yytext); }
 ;
+
+endls: endls ENDL{ }
+					| ENDL
+;
+
 
 %%
 

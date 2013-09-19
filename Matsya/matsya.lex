@@ -21,7 +21,7 @@ extern YYSTYPE yyval;
 ")" {return RPAREN;}
 "(" {return RPAREN;}
 ":=" {return ASSIGN;}
-";" {std::cout<<" SEMIcolon detected\n";return SEMICOLON;}
+";" {return SEMICOLON;}
 "IF" {return IF;}
 "FI" {return FI;}
 "THEN" {return THEN;}
@@ -29,12 +29,14 @@ extern YYSTYPE yyval;
 "WHILE" {return WHILE;}
 "DO" {return DO;}
 "OD" {return OD;}
-"PRINT" {std::cout<<"Print\n"; return PRINT;}
-[0-9]+ {//return yyval.ival =atoi(yytext);
-										std::cout<<"integer\n";return INT;}
-[0-9]+\.[0-9]+ {//return yyval.fval =atof(yytext);
+"PRINT" { return PRINT;}
+[0-9]+ {yyval.ival =atoi(yytext);
+										return INT;}
+[0-9]+\.[0-9]+ {yyval.fval =atof(yytext);
 										return FLOAT;}
-[a-z][a-zA-Z0-9]* {//yyval.svalVar = strdup(yytext);
+[a-z][a-zA-Z0-9]* {
+int len = strlen (yytext) + 1;
+yyval.svalVar =(yytext);
 										return VARIABLE;}
 \n {return ENDL;}
 %%

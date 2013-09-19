@@ -845,7 +845,7 @@ YY_RULE_SETUP
 case 15:
 YY_RULE_SETUP
 #line 24 "matsya.lex"
-{std::cout<<" SEMIcolon detected\n";return SEMICOLON;}
+{return SEMICOLON;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
@@ -885,38 +885,40 @@ YY_RULE_SETUP
 case 23:
 YY_RULE_SETUP
 #line 32 "matsya.lex"
-{std::cout<<"Print\n"; return PRINT;}
+{ return PRINT;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 33 "matsya.lex"
-{//return yyval.ival =atoi(yytext);
-										std::cout<<"integer\n";return INT;}
+{yyval.ival =atoi(yytext);
+										return INT;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 35 "matsya.lex"
-{//return yyval.fval =atof(yytext);
+{yyval.fval =atof(yytext);
 										return FLOAT;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 37 "matsya.lex"
-{//yyval.svalVar = strdup(yytext);
+{
+int len = strlen (yytext) + 1;
+yyval.svalVar =(yytext);
 										return VARIABLE;}
 	YY_BREAK
 case 27:
 /* rule 27 can match eol */
 YY_RULE_SETUP
-#line 39 "matsya.lex"
+#line 41 "matsya.lex"
 {return ENDL;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 40 "matsya.lex"
+#line 42 "matsya.lex"
 ECHO;
 	YY_BREAK
-#line 920 "lex.yy.c"
+#line 922 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1914,7 +1916,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 40 "matsya.lex"
+#line 42 "matsya.lex"
 
 
 /*

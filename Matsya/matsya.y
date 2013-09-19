@@ -1,9 +1,8 @@
 %{
 #include <stdio.h>
-#include <iostream>
-
+using namespace std;
 #include "y.tab.h"
-#include "functions.h"
+#include "function.h"
 #include "header.h"
 
 extern "C" int yylex();
@@ -12,9 +11,7 @@ extern "C" FILE *yyin;
 
 void yyerror(const char *s);
 
-
-tree_t * _C_treeRoot;
-
+tree_t * _treeRoot;
 %}
 
 
@@ -42,80 +39,67 @@ tree_t * _C_treeRoot;
 %token DO
 %token OD
 %token PRINT
-
+%token  INT
+%token FLOAT
+%token VARIABLE
+%token ENDL
 %union{
 	int ival;
 	float fval;
 	char* svalVar;
-	char* svalText
-
+	tree_t* node;
 }
 
 %token <ival> INT
 %token <fval> FLOAT
 %token <svalVar> VARIABLE
-%token <svalText> TEXT
 
-%type <ival> expression expr2 expr3 expr4   
-%type <svalVar> assignment
-%type <svalText> text
-
-
-
-
+%type <node> ROOT statement assignment stmtseq expression expr2 expr3 expr4 designator 			
 
 %%
 
-ROOT: 
-				stmtseq{execute($1);}
+ROOT: stmtseq SEMICOLON {$$=createTree($1);}
 ;
-statement: assignment
-| PRINT expression{ $$ print($2);}
+
+statement: assignment{ $$=$1;}
+| PRINT expression{ $$= print($2);}
 | IF expression THEN stmtseq ELSE stmtseq FI {$$= ifstmt($2,$4,$6);}
 | IF expression THEN stmtseq  FI {$$= ifOnlystmt($2,$4);}
 | WHILE expression DO stmtseq OD {$$= whilestmt($2,$4);}
 ;
 
-assignement:designator ASSIGN expression { $$ = assignment($1,$3); }
+assignment:designator ASSIGN expression { $$ = assignment($1,$3); }
+;
 
+stmtseq: stmtseq SEMICOLON statement {$$ = seq($1,$3);}
+| statement{$$=$1;}
+;
 
-stmtseq:
-							stmtseq SEMICOLON statement {$$ = seq($1,$3);}
-| statement{$$==$1;}
+expression: expr2{$$=$1;}
+|expr2 EQ expr2 { $$= operators("=",$1,$3);}
+|expr2 NE expr2 { $$=  operators("!=",$1,$3);}
+|expr2 LT expr2 { $$= operators("<",$1,$3);}
+|expr2 LE expr2 { $$= operators("<=",$1,$3);}
+|expr2 GT expr2 { $$= operators(">",$1,$3);}
+|expr2 GE expr2 { $$= operators(">=",$1,$3);}
 ;
-expression:
-		expr2{$$=$1;}
-|expr2 EQ expr2 { $$= eq($1,$3);}
-|expr2 NE expr2 { $$= ne($1,$3);}
-|expr2 LT expr2 { $$= lt($1,$3);}
-|expr2 LE expr2 { $$= le($1,$3);}
-|expr2 GT expr2 { $$= gt($1,$3);}
-|expr2 GE expr2 { $$= ge($1,$3);}
+expr2: expr3{ $$ == $1;}
+| expr2 PLUS expr3{ $$ = operators("+",$1,$3);}
+| expr2 MINUS expr3{ $$= operators("-",$1,$3);}
 ;
-expr2:
-					expr3{ $$ == $1;}
-| expr2 PLUS expr3{ $$ = plus($1,$3);}
-| expr2 MINUS expr3{ $$= minus($1,$3);}
-;
-expr3:
-					expr4{ $$=$1;}
-| expr3 MULT expr4{$$ = mult($1,$3);}
-| expr3 DIVIDE expr4 {$$ = divide($1,$3);}
+expr3: expr4{ $$=$1;}
+| expr3 MULT expr4{$$ = operators("*",$1,$3);}
+| expr3 DIVIDE expr4 {$$ = operators("/",$1,$3);}
 ;
 
 expr4:
 					PLUS expr4 {$$ = $2;}
-| MINUS expr4 {$$ = neq($2);}
+| MINUS expr4 {$$ = $2;}
 |	LPAREN expression RPAREN {$$ = $2;}
 |	INT { $$ = integer($1);}
-|	FLOAT{ $$ = floating($1);}
 |	designator {$$ =$1;}
-|	text {$$ =$1;}
 ;
 
-text:
-				TEXT {$$ = text($1);}
-;
 
 designator:
 										VARIABLE{ $$ = variable($1); }
@@ -123,18 +107,21 @@ designator:
 
 %%
 
-main(){
-	FILE *myfile = fopen("in.matsya","r");
-	if(!myfile){
-					cout<<" I cant open in.matsya"<<endl;
-	}
-	yyin = myfile
+int main(){
+	//FILE *myfile = fopen("in.matsya","r");
+	//if(!myfile){
+			//		printf(" I cant open in.matsya\n");
+//	}
+	//yyin = myfile;
 	do{
-			yyparse();
+//			yyparse();
 	}while(!feof(yyin));
+
+
 }
-void yyerror(const char *s) {
-								cout << "EEK, parse error!  Message: " << s<< " at line "<<line_no << endl;
-								// might as well halt now:
-								//exit(-1);
+
+void yyerror(const char* s){
+std::cout<<" Random error"<<endl;
+
 }
+

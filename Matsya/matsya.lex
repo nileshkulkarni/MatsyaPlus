@@ -1,7 +1,7 @@
 %{
 #include "y.tab.h"
-extern int yylval;
 //extern char* yytext[];
+extern YYSTYPE yyval;
 %}
 %%
 [ \t] ;
@@ -29,10 +29,9 @@ extern int yylval;
 "PRINT" {return PRINT;}
 [0-9]+ {return yyval.ival =atoi(yytext);return INT;}
 [0-9]+\.[0-9]+ {return yyval.fval =atof(yytext);return FLOAT;}
-\'([a-zA-z0-9]+\s+)+\' {yyval.svalText = strdup(yytext); return TEXT;}
-[a-z][a-zA-Z0-9]* {	yyval.sval = strdup(yytext);return VARIABLE;}
+[a-z][a-zA-Z0-9]* {	yyval.svalVar = strdup(yytext);return VARIABLE;}
 \n {return ENDL;}
 %%
 #ifndef yywarp
-yywrap(){	return 1;}
+int yywrap(){	return 1;}
 #endif

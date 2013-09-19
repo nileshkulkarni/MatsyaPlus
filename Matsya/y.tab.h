@@ -1,4 +1,3 @@
-#include "header.h"
 #define EQ 257
 #define NE 258
 #define LT 259
@@ -35,7 +34,7 @@ typedef union{
 	int ival;
 	float fval;
 	char* svalVar;
-	tree_t* node;
+	struct tree_t* node;
 } YYSTYPE;
 #endif /* !YYSTYPE_IS_DECLARED */
 extern YYSTYPE yylval;

@@ -18,12 +18,12 @@ static const char yysccsid[] = "@(#)yaccpar	1.9 (Berkeley) 02/21/93";
 
 #line 2 "matsya.y"
 #include <stdio.h>
-using namespace std;
 #include "y.tab.h"
 #include "function.h"
 #include "header.h"
 
-extern "C" int yylex();
+/*extern "C" int yylex();*/
+extern  int yylex();
 extern "C" int yyparse();
 extern "C" FILE *yyin;
 
@@ -41,7 +41,7 @@ typedef union{
 	int ival;
 	float fval;
 	char* svalVar;
-	tree_t* node;
+	struct tree_t* node;
 } YYSTYPE;
 #endif /* !YYSTYPE_IS_DECLARED */
 #line 47 "y.tab.c"
@@ -282,11 +282,10 @@ int main(){
 }
 
 void yyerror(const char* s){
-std::cout<<" Random error"<<endl;
-
+	return;
 }
 
-#line 289 "y.tab.c"
+#line 288 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -604,7 +603,7 @@ case 28:
 #line 105 "matsya.y"
 	{ yyval.node = variable(yystack.l_mark[0].svalVar); }
 break;
-#line 607 "y.tab.c"
+#line 606 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;

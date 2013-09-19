@@ -1,11 +1,11 @@
 %{
 #include <stdio.h>
-using namespace std;
 #include "y.tab.h"
 #include "function.h"
 #include "header.h"
 
-extern "C" int yylex();
+//extern "C" int yylex();
+extern  int yylex();
 extern "C" int yyparse();
 extern "C" FILE *yyin;
 
@@ -47,7 +47,7 @@ tree_t * _treeRoot;
 	int ival;
 	float fval;
 	char* svalVar;
-	tree_t* node;
+	struct tree_t* node;
 }
 
 %token <ival> INT
@@ -121,7 +121,6 @@ int main(){
 }
 
 void yyerror(const char* s){
-std::cout<<" Random error"<<endl;
-
+	return;
 }
 

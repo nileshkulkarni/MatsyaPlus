@@ -48,6 +48,9 @@ tree_t * print(tree_t* expr){
 								t->links = new tree_t*[1];
 								t->links[0] = expr;
 								t->type = "PRINT"; 
+								std:: cout<<" tree for print created\n";
+								std:: cout<<expr->type<<endl;
+								
 								return t;
 
 }
@@ -105,12 +108,13 @@ tree_t* assignment(tree_t* variable, tree_t* expr){
 
 tree_t* singleStmt(tree_t* stmt){
 								tree_t* t = new tree_t;
-
+								
 								t->type ="STMTSEQ";
 								t->nb_links=2;
 								t->links = new tree_t*[2];
 								t->links[0] = NULL ;
 								t->links[1] = stmt;
+								std::cout<<" Statement type in "<<stmt->type<<std::endl;
 								return t;
 
 

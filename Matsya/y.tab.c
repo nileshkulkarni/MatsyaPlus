@@ -284,7 +284,7 @@ int main(){
 }
 
 void yyerror(const char* s){
-		std::cout<<"parsing error"<<std::endl;
+		std::cout<<"parsing error + "<< s<<std::endl;
 		return;
 }
 
@@ -496,7 +496,7 @@ yyreduce:
     {
 case 1:
 #line 63 "matsya.y"
-	{yyval.node=createTree(yystack.l_mark[-1].node);}
+	{ std::cout<<" stmt seg here\n";yyval.node=createTree(yystack.l_mark[-1].node);}
 break;
 case 2:
 #line 66 "matsya.y"
@@ -504,7 +504,7 @@ case 2:
 break;
 case 3:
 #line 67 "matsya.y"
-	{ yyval.node= print(yystack.l_mark[0].node);}
+	{ std::cout<<" Print here\n";yyval.node= print(yystack.l_mark[0].node);}
 break;
 case 4:
 #line 68 "matsya.y"
@@ -528,7 +528,7 @@ case 8:
 break;
 case 9:
 #line 77 "matsya.y"
-	{yyval.node=singleStmt(yystack.l_mark[0].node);}
+	{std::cout<<" signle statement level\n";yyval.node=singleStmt(yystack.l_mark[0].node);}
 break;
 case 10:
 #line 80 "matsya.y"

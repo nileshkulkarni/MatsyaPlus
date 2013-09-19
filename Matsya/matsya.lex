@@ -1,7 +1,10 @@
 %{
 #include "y.tab.h"
+#include <iostream>
+using namespace std;
+//#define YY_DECL extern "C" int yylex()
 //extern char* yytext[];
-//extern YYSTYPE yyval;
+extern YYSTYPE yyval;
 %}
 %%
 [ \t] ;
@@ -18,7 +21,7 @@
 ")" {return RPAREN;}
 "(" {return RPAREN;}
 ":=" {return ASSIGN;}
-";" {return SEMICOLON;}
+";" {std::cout<<" SEMIcolon detected\n";return SEMICOLON;}
 "IF" {return IF;}
 "FI" {return FI;}
 "THEN" {return THEN;}
@@ -26,15 +29,17 @@
 "WHILE" {return WHILE;}
 "DO" {return DO;}
 "OD" {return OD;}
-"PRINT" {return PRINT;}
+"PRINT" {std::cout<<"Print\n"; return PRINT;}
 [0-9]+ {//return yyval.ival =atoi(yytext);
-										return INT;}
+										std::cout<<"integer\n";return INT;}
 [0-9]+\.[0-9]+ {//return yyval.fval =atof(yytext);
 										return FLOAT;}
 [a-z][a-zA-Z0-9]* {//yyval.svalVar = strdup(yytext);
 										return VARIABLE;}
 \n {return ENDL;}
 %%
+/*
 #ifndef yywarp
 int yywrap(){	return 1;}
 #endif
+*/

@@ -1,5 +1,6 @@
+#line 2 "lex.yy.c"
 
-#line 3 "lex.yy.c"
+#line 4 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -494,9 +495,12 @@ char *yytext;
 #line 1 "matsya.lex"
 #line 2 "matsya.lex"
 #include "y.tab.h"
+#include <iostream>
+using namespace std;
+//#define YY_DECL extern "C" int yylex()
 //extern char* yytext[];
-//extern YYSTYPE yyval;
-#line 500 "lex.yy.c"
+extern YYSTYPE yyval;
+#line 504 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -683,9 +687,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 6 "matsya.lex"
+#line 9 "matsya.lex"
 
-#line 689 "lex.yy.c"
+#line 693 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -770,149 +774,149 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 7 "matsya.lex"
+#line 10 "matsya.lex"
 ;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 8 "matsya.lex"
+#line 11 "matsya.lex"
 {return EQ;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 9 "matsya.lex"
+#line 12 "matsya.lex"
 {return NE;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 10 "matsya.lex"
+#line 13 "matsya.lex"
 {return LT;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 11 "matsya.lex"
+#line 14 "matsya.lex"
 {return LE;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 12 "matsya.lex"
+#line 15 "matsya.lex"
 {return GT;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 13 "matsya.lex"
+#line 16 "matsya.lex"
 {return GE;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 14 "matsya.lex"
+#line 17 "matsya.lex"
 {return PLUS;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 15 "matsya.lex"
+#line 18 "matsya.lex"
 {return MINUS;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 16 "matsya.lex"
+#line 19 "matsya.lex"
 {return MULT;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 17 "matsya.lex"
+#line 20 "matsya.lex"
 {return DIVIDE;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 18 "matsya.lex"
+#line 21 "matsya.lex"
 {return RPAREN;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 19 "matsya.lex"
+#line 22 "matsya.lex"
 {return RPAREN;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 20 "matsya.lex"
+#line 23 "matsya.lex"
 {return ASSIGN;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 21 "matsya.lex"
-{return SEMICOLON;}
+#line 24 "matsya.lex"
+{std::cout<<" SEMIcolon detected\n";return SEMICOLON;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 22 "matsya.lex"
+#line 25 "matsya.lex"
 {return IF;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 23 "matsya.lex"
+#line 26 "matsya.lex"
 {return FI;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 24 "matsya.lex"
+#line 27 "matsya.lex"
 {return THEN;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 25 "matsya.lex"
+#line 28 "matsya.lex"
 {return ELSE;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 26 "matsya.lex"
+#line 29 "matsya.lex"
 {return WHILE;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 27 "matsya.lex"
+#line 30 "matsya.lex"
 {return DO;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 28 "matsya.lex"
+#line 31 "matsya.lex"
 {return OD;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 29 "matsya.lex"
-{return PRINT;}
+#line 32 "matsya.lex"
+{std::cout<<"Print\n"; return PRINT;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 30 "matsya.lex"
+#line 33 "matsya.lex"
 {//return yyval.ival =atoi(yytext);
-										return INT;}
+										std::cout<<"integer\n";return INT;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 32 "matsya.lex"
+#line 35 "matsya.lex"
 {//return yyval.fval =atof(yytext);
 										return FLOAT;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 34 "matsya.lex"
+#line 37 "matsya.lex"
 {//yyval.svalVar = strdup(yytext);
 										return VARIABLE;}
 	YY_BREAK
 case 27:
 /* rule 27 can match eol */
 YY_RULE_SETUP
-#line 36 "matsya.lex"
+#line 39 "matsya.lex"
 {return ENDL;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 37 "matsya.lex"
+#line 40 "matsya.lex"
 ECHO;
 	YY_BREAK
-#line 916 "lex.yy.c"
+#line 920 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1910,10 +1914,12 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 37 "matsya.lex"
+#line 40 "matsya.lex"
 
 
+/*
 #ifndef yywarp
 int yywrap(){	return 1;}
 #endif
+*/
 

@@ -60,11 +60,12 @@ tree_t * _treeRoot;
 
 %%
 
-ROOT: stmtseq SEMICOLON {$$=createTree($1);}
+ROOT: stmtseq SEMICOLON { std::cout<<" stmt seg here\n";$$=createTree($1);}
+					
 ;
 
 statement: assignment{ $$=$1;}
-| PRINT expression{ $$= print($2);}
+| PRINT expression{ std::cout<<" Print here\n";$$= print($2);}
 | IF expression THEN stmtseq ELSE stmtseq FI {$$= ifstmt($2,$4,$6);}
 | IF expression THEN stmtseq  FI {$$= ifOnlystmt($2,$4);}
 | WHILE expression DO stmtseq OD {$$= whilestmt($2,$4);}
@@ -74,7 +75,7 @@ assignment:designator ASSIGN expression { $$ = assignment($1,$3); }
 ;
 
 stmtseq: stmtseq SEMICOLON statement {$$ = seq($1,$3);}
-| statement{$$=singleStmt($1);}
+| statement{std::cout<<" signle statement level\n";$$=singleStmt($1);}
 ;
 
 expression: expr2{$$=$1;}
@@ -123,7 +124,7 @@ int main(){
 }
 
 void yyerror(const char* s){
-		std::cout<<"parsing error"<<std::endl;
+		std::cout<<"parsing error + "<< s<<std::endl;
 		return;
 }
 

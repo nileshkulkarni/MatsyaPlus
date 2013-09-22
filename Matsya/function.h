@@ -3,6 +3,7 @@
 //#include "y.tab.h"
 #include "header.h"
 
+void printNodeData(tree_t*, int);
 tree_t * print(tree_t* expr);
 tree_t * ifstmt(tree_t* cond,tree_t* expr1,tree_t* expr2);
 

@@ -7,7 +7,7 @@ using namespace std;
 extern YYSTYPE yyval;
 %}
 %%
-[ \t] ;
+[ \n\t] ;
 "=" {return EQ;}
 "!=" {return NE;}
 "<" {return LT;}
@@ -38,7 +38,8 @@ extern YYSTYPE yyval;
 int len = strlen (yytext) + 1;
 yyval.svalVar =(yytext);
 										return VARIABLE;}
-\n {return ENDL;}
+/*\n {return ENDL;}
+*/
 %%
 /*
 #ifndef yywarp

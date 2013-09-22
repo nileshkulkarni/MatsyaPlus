@@ -62,25 +62,25 @@ tree_t * _treeRoot;
 %%
 
 ROOT: stmtseq endls  { $$=createTree($1);}
-					
 ;
 
 statement: assignment{ $$=$1;}
 | PRINT expression{ $$= print($2);}
-| IF expression THEN stmtseq ELSE stmtseq FI {$$= ifstmt($2,$4,$6);}
-| IF expression THEN stmtseq  FI {$$= ifOnlystmt($2,$4);}
+| IF expression THEN endls stmtseq endls ELSE endls stmtseq FI {cout<<"\n";$$= ifstmt($2,$5,$9);}
+| IF expression THEN endls stmtseq endls FI {cout<<"Reached here \n";$$= ifOnlystmt($2,$5);}
 | WHILE expression DO stmtseq OD {$$= whilestmt($2,$4);}
 ;
 
 assignment:designator ASSIGN expression {$$ = assignment($1,$3); }
 ;
 
-stmtseq: stmtseq endls statement {$$ = seq($1,$3);}
-| statement{$$=singleStmt($1);}
+stmtseq: stmtseq endls statement { std::cout<<"Recognised a stmt sequence\n";
+							$$ = seq($1,$3);}
+| statement endls {$$=singleStmt($1);}
 ;
 
 expression: expr2{$$=$1;}
-|expr2 EQ expr2 { $$= operators("=",$1,$3);}
+|expr2 EQ expr2 { std::cout<<"Should come here\n";printNodeData(operators("=",$1,$3),0);$$= operators("=",$1,$3);}
 |expr2 NE expr2 { $$=  operators("!=",$1,$3);}
 |expr2 LT expr2 { $$= operators("<",$1,$3);}
 |expr2 LE expr2 { $$= operators("<=",$1,$3);}
@@ -97,7 +97,7 @@ expr3: expr4{ $$=$1;}
 ;
 
 expr4:
-					PLUS expr4 {$$ = $2;}
+		PLUS expr4 {$$ = $2;}
 | MINUS expr4 {$$ = $2;}
 |	LPAREN expression RPAREN {$$ = $2;}
 |	INT {  $$ = integer($1);}
@@ -111,6 +111,7 @@ designator:
 
 endls: endls ENDL{ }
 					| ENDL
+					|
 ;
 
 

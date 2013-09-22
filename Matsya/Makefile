@@ -1,5 +1,5 @@
 matsya: lex.yy.c y.tab.c y.tab.h header.h function.cpp
-						g++ function.cpp y.tab.c lex.yy.c -lfl -o matsya -Wno-write-strings
+						g++ -g function.cpp y.tab.c lex.yy.c -lfl -o matsya -Wno-write-strings
 
 
 

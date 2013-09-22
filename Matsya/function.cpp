@@ -14,12 +14,16 @@ void insertTabs(int n){
 }
 
 void printNodeData(tree_t* node,int tablevel){
+						if(node==NULL){
+														std::cout<<"Node is null\n";
+								return;
+						}
 						insertTabs(tablevel);
 					 cout<<"Type ="<<node->type<<"\n";
 						insertTabs(tablevel);
 						cout<<"\tNo of links="<<node->nb_links<<"\n\n";
 						int nb_links = node->nb_links;
-					
+								
 						for(int i =0;i<nb_links;i++){
 										printNodeData(node->links[i],tablevel+1);
 						}

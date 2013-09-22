@@ -5,9 +5,11 @@ using namespace std;
 //#define YY_DECL extern "C" int yylex()
 //extern char* yytext[];
 extern YYSTYPE yyval;
+extern int lineNo;
 %}
 %%
-[ \n\t] ;
+[ \t] ;
+[ \n ] { lineNo++; return ENDL;}
 "=" {return EQ;}
 "!=" {return NE;}
 "<" {return LT;}
@@ -34,12 +36,10 @@ extern YYSTYPE yyval;
 										return INT;}
 [0-9]+\.[0-9]+ {yyval.fval =atof(yytext);
 										return FLOAT;}
-[a-z][a-zA-Z0-9]* {
+[a-zA-Z][a-zA-Z0-9]* {
 int len = strlen (yytext) + 1;
 yyval.svalVar =(yytext);
 										return VARIABLE;}
-/*\n {return ENDL;}
-*/
 %%
 /*
 #ifndef yywarp

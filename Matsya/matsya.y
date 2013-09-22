@@ -10,7 +10,7 @@ using namespace std;
 extern  int yylex();
 extern "C" int yyparse();
 extern "C" FILE *yyin;
-
+int lineNo;
 void yyerror(const char *s);
 extern char* yytext;
 tree_t * _treeRoot;
@@ -61,22 +61,22 @@ tree_t * _treeRoot;
 
 %%
 
-ROOT: stmtseq endls  { $$=createTree($1);}
+ROOT: stmtseq   { std::cout<<"No error here\n";$$=createTree($1);}
 ;
 
-statement: assignment{ $$=$1;}
-| PRINT expression{ $$= print($2);}
-| IF expression THEN endls stmtseq endls ELSE endls stmtseq FI {cout<<"\n";$$= ifstmt($2,$5,$9);}
-| IF expression THEN endls stmtseq endls FI {cout<<"Reached here \n";$$= ifOnlystmt($2,$5);}
+statement: assignment SEMICOLON{ $$=$1;}
+| PRINT expression SEMICOLON{std::cout<<" Print recognised\n";$$= print($2);}
+| IF expression THEN stmtseq  ELSE  stmtseq  FI {cout<<"\n";$$= ifstmt($2,$4,$6);}
+| IF expression THEN stmtseq FI {cout<<"Reached here \n";$$= ifOnlystmt($2,$4);}
 | WHILE expression DO stmtseq OD {$$= whilestmt($2,$4);}
 ;
 
 assignment:designator ASSIGN expression {$$ = assignment($1,$3); }
 ;
 
-stmtseq: stmtseq endls statement { std::cout<<"Recognised a stmt sequence\n";
-							$$ = seq($1,$3);}
-| statement endls {$$=singleStmt($1);}
+stmtseq: stmtseq  statement { std::cout<<"Recognised a stmt sequence\n";
+							$$ = seq($1,$2);}
+| statement  {std::cout<<"Single statment";$$=singleStmt($1);}
 ;
 
 expression: expr2{$$=$1;}
@@ -109,10 +109,6 @@ designator:
 										VARIABLE{$$ = variable(yytext); }
 ;
 
-endls: endls ENDL{ }
-					| ENDL
-					|
-;
 
 
 %%
@@ -132,6 +128,7 @@ int main(){
 
 void yyerror(const char* s){
 		std::cout<<"parsing error + "<< s<<std::endl;
+		std::cout<<"line no + "<< lineNo<<std::endl;
 		return;
 }
 

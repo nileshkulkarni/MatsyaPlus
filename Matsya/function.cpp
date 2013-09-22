@@ -18,7 +18,7 @@ void printNodeData(tree_t* node,int tablevel){
 								return;
 						}
 						insertTabs(tablevel);
-					 cout<<"Type ="<<node->type<<"\n";
+					 cout<<"Type is "<<node->type<<"\n";
 						insertTabs(tablevel);
 						cout<<"\tNo of links="<<node->nb_links<<"\n\n";
 						int nb_links = node->nb_links;

@@ -80,7 +80,7 @@ stmtseq: stmtseq statement { std::cout<<"Recognised a stmt sequence\n";
 ;
 
 expression: expr2{$$=$1;}
-|expr2 EQ expr2 { std::cout<<"Should come here\n";printNodeData(operators("=",$1,$3),0);$$= operators("=",$1,$3);}
+|expr2 EQ expr2 { std::cout<<"Should come here\n";$$= operators("=",$1,$3);}
 |expr2 NE expr2 { $$=  operators("!=",$1,$3);}
 |expr2 LT expr2 { $$= operators("<",$1,$3);}
 |expr2 LE expr2 { $$= operators("<=",$1,$3);}

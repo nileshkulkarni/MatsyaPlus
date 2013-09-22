@@ -74,7 +74,7 @@ statement: assignment SEMICOLON{ $$=$1;}
 assignment:designator ASSIGN expression {$$ = assignment($1,$3); }
 ;
 
-stmtseq: stmtseq  statement { std::cout<<"Recognised a stmt sequence\n";
+stmtseq: stmtseq statement { std::cout<<"Recognised a stmt sequence\n";
 							$$ = seq($1,$2);}
 | statement  {std::cout<<"Single statment";$$=singleStmt($1);}
 ;

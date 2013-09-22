@@ -1,0 +1,4 @@
+IF x=y THEN
+PRINT 2;
+PRINT 2;
+FI

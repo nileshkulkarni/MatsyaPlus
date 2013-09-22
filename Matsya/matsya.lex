@@ -8,8 +8,7 @@ extern YYSTYPE yyval;
 extern int lineNo;
 %}
 %%
-[ \t] ;
-[ \n ] { lineNo++; return ENDL;}
+[ \n\t] ;
 "=" {return EQ;}
 "!=" {return NE;}
 "<" {return LT;}

@@ -1,5 +1,2 @@
-IF x=y THEN
 PRINT 2;
-ELSE
-PRINT 2;
-FI
+PRINT 5;

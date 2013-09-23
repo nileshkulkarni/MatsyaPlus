@@ -31,7 +31,7 @@ extern int lineNo;
 "DO" {return DO;}
 "OD" {return OD;}
 "PRINT" { return PRINT;}
-[0-9]+ {yyval.ival =atoi(yytext);
+[0-9]+ { yyval.ival =atoi(yytext);
 										return INT;}
 [0-9]+\.[0-9]+ {yyval.fval =atof(yytext);
 										return FLOAT;}

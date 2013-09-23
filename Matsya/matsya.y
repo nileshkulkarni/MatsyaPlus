@@ -14,6 +14,7 @@ int lineNo;
 void yyerror(const char *s);
 extern char* yytext;
 tree_t * _treeRoot;
+ 
 %}
 
 
@@ -61,26 +62,30 @@ tree_t * _treeRoot;
 
 %%
 
-ROOT: stmtseq   { std::cout<<"No error here\n";$$=createTree($1);}
+ROOT: stmtseq   { $$=createTree($1);}
 ;
 
 statement: assignment SEMICOLON{ $$=$1;}
-| PRINT expression SEMICOLON{std::cout<<" Print recognised\n";$$= print($2);}
+| PRINT expression SEMICOLON{
+				tree_t* t = $2;
+	 				$$= print($2);}
 | IF expression THEN stmtseq  ELSE  stmtseq  FI {cout<<"\n";$$= ifstmt($2,$4,$6);}
-| IF expression THEN stmtseq FI {cout<<"Reached here \n";$$= ifOnlystmt($2,$4);}
+| IF expression THEN stmtseq FI {$$= ifOnlystmt($2,$4);}
 | WHILE expression DO stmtseq OD {$$= whilestmt($2,$4);}
 ;
 
 assignment:designator ASSIGN expression {$$ = assignment($1,$3); }
 ;
 
-stmtseq: stmtseq statement { std::cout<<"Recognised a stmt sequence\n";
+stmtseq: stmtseq statement { 
 							$$ = seq($1,$2);}
-| statement  {std::cout<<"Single statment";$$=singleStmt($1);}
+| statement  {$$=singleStmt($1);}
 ;
 
-expression: expr2{$$=$1;}
-|expr2 EQ expr2 { std::cout<<"Should come here\n";$$= operators("=",$1,$3);}
+expression: expr2{
+		  
+		  $$=$1;}
+|expr2 EQ expr2 { $$= operators("=",$1,$3);}
 |expr2 NE expr2 { $$=  operators("!=",$1,$3);}
 |expr2 LT expr2 { $$= operators("<",$1,$3);}
 |expr2 LE expr2 { $$= operators("<=",$1,$3);}
@@ -91,7 +96,7 @@ expr2: expr3{ $$ == $1;}
 | expr2 PLUS expr3{ $$ = operators("+",$1,$3);}
 | expr2 MINUS expr3{ $$= operators("-",$1,$3);}
 ;
-expr3: expr4{ $$=$1;}
+expr3: expr4{  $$=$1;}
 | expr3 MULT expr4{$$ = operators("*",$1,$3);}
 | expr3 DIVIDE expr4 {$$ = operators("/",$1,$3);}
 ;
@@ -100,7 +105,8 @@ expr4:
 		PLUS expr4 {$$ = $2;}
 | MINUS expr4 {$$ = $2;}
 |	LPAREN expression RPAREN {$$ = $2;}
-|	INT {  $$ = integer($1);}
+|	INT { int val = atoi(yytext);
+		$$ = integer(val);}
 |	designator {$$ =$1;}
 ;
 

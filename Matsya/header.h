@@ -5,8 +5,8 @@
 struct tree_t  {
     struct tree_t **links;
     int nb_links;
-				char* symbol;
-				int value;
+	char* symbol;
+	int value;
     char* type; // the grammar rule
 };
 

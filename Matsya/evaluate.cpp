@@ -103,7 +103,6 @@ int Evaluate :: _executeStatement(tree_t * t){
 		
 	
 	}
-	if(type 
 
 	return 0;
 }

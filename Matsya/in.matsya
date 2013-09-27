@@ -1,7 +1,13 @@
-
 x:=2;
-WHILE x<9 DO
-x:=x+1;
-PRINT x;
+a:=0;
+b:=1;
+n:=5;
+fib:=0;
+WHILE n>0 DO
+	fib:=a+b;
+	b:=a;
+	a:=fib;
+	n:=n-1;
 OD
+PRINT fib;
 PRINT x;

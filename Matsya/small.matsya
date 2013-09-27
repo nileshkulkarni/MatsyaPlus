@@ -1,0 +1,27 @@
+speed:=100 ;
+t:= 10;
+
+J := 0;
+WHILE J<4 DO
+SURGE speed
+DELAY t;
+	WHILE YAW_CURRENT = 90 DO
+		YAW_ABSOLUTE 90;
+		DELAY t;
+	OD
+
+OD
+
+
+YAW_RELATIVE x;
+SURGE 100;
+DELAY t;
+I := 0;
+WHILE(I <=10) DO
+
+
+
+I := I + 1;
+OD
+
+

@@ -1,0 +1,3 @@
+Get global sensor reading
+Put or and operators
+

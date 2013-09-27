@@ -1,2 +1,7 @@
-PRINT 2;
-PRINT 5;
+
+x:=2;
+WHILE x<9 DO
+x:=x+1;
+PRINT x;
+OD
+PRINT x;
